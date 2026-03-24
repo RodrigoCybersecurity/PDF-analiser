@@ -7,18 +7,18 @@ from .pipeline import analyse_files
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="pdf-analyser",
-        description="Pipeline de triagem de PDFs com análise estática e sandbox.",
+        prog="file-analyser",
+        description="Pipeline de triagem de PDFs e JPEGs.",
     )
     parser.add_argument(
         "targets",
         nargs="*",
-        help="PDF(s) a analisar. Se omitido, usa --incoming.",
+        help="Ficheiro(s) PDF/JPEG a analisar. Se omitido, usa --incoming.",
     )
     parser.add_argument(
         "--incoming",
         action="store_true",
-        help="Analisa todos os PDFs na pasta incoming/.",
+        help="Analisa todos os ficheiros suportados na pasta incoming/.",
     )
     return parser
 

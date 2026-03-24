@@ -1,24 +1,25 @@
-# PDF Analiser
+# File Analiser
 
-Pipeline de triagem de PDFs com duas fases:
+Pipeline de triagem para dois tipos de ficheiro:
 
-1. análise estática com `pdfid.py`
-2. análise dinâmica numa sandbox Docker quando existem indicadores suspeitos
+1. PDFs com análise estática + sandbox
+2. JPEGs com sanitização por reencode seguro
 
 ## Estrutura
 
 ```text
 .
-├── pdf_analyser/          # CLI e pipeline principal em Python
+├── file_analyser/         # CLI e pipeline principal em Python
 ├── triage/
 │   ├── pdfid.py           # ferramenta de análise estática
+│   ├── sanitize_jpeg.py   # wrapper standalone para sanitização JPEG
 │   ├── triage.ps1         # wrapper PowerShell
 │   └── triage.sh          # wrapper shell
 ├── sandbox/
 │   └── analyze_inside.py  # análise executada dentro do contentor
-├── incoming/              # PDFs a analisar
-├── accepted/              # PDFs aceites
-├── rejected/              # PDFs rejeitados
+├── incoming/              # PDFs/JPEGs a analisar
+├── accepted/              # PDFs aceites e JPEGs sanitizados
+├── rejected/              # PDFs/JPEGs rejeitados
 ├── reports/               # relatórios txt/json
 ├── docker-compose.yml
 └── Dockerfile.sandbox
@@ -28,12 +29,16 @@ Pipeline de triagem de PDFs com duas fases:
 
 Quando executas a CLI:
 
-- corre `pdfid.py` e guarda o relatório em `reports/<nome>_pdfid.txt`
-- procura marcadores suspeitos como `/JavaScript`, `/JS`, `/OpenAction`, `/AA`, `/Launch`, `/EmbeddedFile` e `/URI`
-- se não houver sinais suspeitos, aceita o ficheiro logo na fase estática
-- se houver, envia o PDF para a sandbox Docker
-- a sandbox tenta abrir o ficheiro com `evince`, observa o comportamento com `strace` e grava `reports/<nome>_verdict.json`
-- no fim, o PDF é copiado para `accepted/` ou `rejected/`
+- para PDFs:
+  - corre `pdfid.py`
+  - se houver indicadores suspeitos, envia o ficheiro para a sandbox Docker
+- para JPEGs:
+  - valida a estrutura básica
+  - descodifica a imagem
+  - remove metadados e volta a codificar para um novo JPEG limpo
+- no fim, o ficheiro seguro vai para `accepted/` e o rejeitado vai para `rejected/`
+
+Os relatórios finais continuam a ser gravados em `reports/<nome>_verdict.json`.
 
 ## Como executar
 
@@ -42,13 +47,17 @@ Quando executas a CLI:
 Analisar um ficheiro:
 
 ```bash
-python3 -m pdf_analyser incoming/sample_signed.pdf
+python3 -m file_analyser incoming/sample_signed.pdf
 ```
 
-Analisar todos os PDFs em `incoming/`:
+```bash
+python3 -m file_analyser incoming/foto.jpg
+```
+
+Analisar todos os ficheiros suportados em `incoming/`:
 
 ```bash
-python3 -m pdf_analyser --incoming
+python3 -m file_analyser --incoming
 ```
 
 ### Shell
@@ -63,19 +72,27 @@ python3 -m pdf_analyser --incoming
 powershell -ExecutionPolicy Bypass -File .\triage\triage.ps1 .\incoming\sample_signed.pdf
 ```
 
-Sem argumentos, o wrapper PowerShell analisa todos os PDFs em `incoming/`.
+Sem argumentos, o wrapper PowerShell analisa todos os ficheiros suportados em `incoming/`.
+
+### JPEG standalone
+
+O script que testaste continua disponível:
+
+```bash
+python3 triage/sanitize_jpeg.py imagem.jpg imagem_clean.jpg --report reports/imagem.json
+```
 
 ## Relatórios
 
 Cada análise produz:
 
-- `reports/<nome>_pdfid.txt`: saída completa do `pdfid.py`
+- `reports/<nome>_pdfid.txt`: saída completa do `pdfid.py` para PDFs
 - `reports/<nome>_verdict.json`: veredito final do pipeline
 
 O JSON inclui:
 
 - `status`: `accepted` ou `rejected`
-- `source`: `static` ou `sandbox`
+- `source`: `static`, `sandbox` ou `jpeg_sanitizer`
 - `reasons`: motivos do veredito
 - `checks`: detalhe técnico de cada etapa
 - `artifacts`: caminhos para os ficheiros gerados
@@ -83,6 +100,7 @@ O JSON inclui:
 ## Requisitos
 
 - Python 3
+- Pillow
 - Docker com `docker compose`
 
-Se o PDF for suspeito e a sandbox falhar, o pipeline falha em modo conservador e rejeita o ficheiro.
+Se um PDF for suspeito e a sandbox falhar, o pipeline falha em modo conservador e rejeita o ficheiro.

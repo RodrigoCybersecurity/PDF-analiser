@@ -1,4 +1,4 @@
-"""PDF triage pipeline package."""
+"""File triage pipeline package."""
 
 from .pipeline import analyse_files
 

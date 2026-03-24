@@ -1,6 +1,26 @@
-﻿{
+{
   "file": "sample_signed.pdf",
   "status": "accepted",
   "source": "static",
-  "reason": "pdfid sem indicadores crÃ­ticos"
+  "reasons": [
+    "pdfid_clean"
+  ],
+  "checks": {
+    "pdfid": {
+      "command": [
+        "/usr/bin/python3",
+        "/home/samu/PDF-analiser/triage/pdfid.py",
+        "/home/samu/PDF-analiser/incoming/sample_signed.pdf"
+      ],
+      "rc": 0,
+      "report_path": "/home/samu/PDF-analiser/reports/sample_signed_pdfid.txt",
+      "hits": [],
+      "suspicious": false
+    }
+  },
+  "artifacts": {
+    "pdfid_report": "/home/samu/PDF-analiser/reports/sample_signed_pdfid.txt",
+    "verdict_report": "/home/samu/PDF-analiser/reports/sample_signed_verdict.json",
+    "copied_to": "/home/samu/PDF-analiser/accepted/sample_signed.pdf"
+  }
 }

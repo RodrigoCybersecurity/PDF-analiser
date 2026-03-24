@@ -12,7 +12,6 @@ Pipeline de triagem para dois tipos de ficheiro:
 ├── file_analyser/         # CLI e pipeline principal em Python
 ├── triage/
 │   ├── pdfid.py           # ferramenta de análise estática
-│   ├── sanitize_jpeg.py   # wrapper standalone para sanitização JPEG
 │   ├── triage.ps1         # wrapper PowerShell
 │   └── triage.sh          # wrapper shell
 ├── sandbox/
@@ -73,14 +72,6 @@ powershell -ExecutionPolicy Bypass -File .\triage\triage.ps1 .\incoming\sample_s
 ```
 
 Sem argumentos, o wrapper PowerShell analisa todos os ficheiros suportados em `incoming/`.
-
-### JPEG standalone
-
-O script que testaste continua disponível:
-
-```bash
-python3 triage/sanitize_jpeg.py imagem.jpg imagem_clean.jpg --report reports/imagem.json
-```
 
 ## Relatórios
 

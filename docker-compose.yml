@@ -1,0 +1,21 @@
+services:
+  sandbox:
+    build:
+      context: .
+      dockerfile: Dockerfile.sandbox
+    image: pdf-alt1-sandbox
+    network_mode: "none"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=128m
+    pids_limit: 256
+    mem_limit: 512m
+    cpus: 1.0
+    user: "10001:100"
+    volumes:
+      - ./reports:/output
+    entrypoint: ["python3", "/app/analyze_inside.py"]

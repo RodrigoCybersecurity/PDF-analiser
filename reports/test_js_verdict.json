@@ -1,9 +1,9 @@
 {
-  "file": "input.pdf",
+  "file": "test_js.pdf",
   "status": "rejected",
   "source": "sandbox",
   "reasons": [
-    "suspicious_syscalls:['connect(', 'execve(', 'socket(']"
+    "suspicious_syscalls_detected"
   ],
   "checks": {
     "pdfinfo": {
@@ -41,7 +41,72 @@
       ],
       "rc": 124,
       "stdout": "",
-      "stderr": "\n(evince:26): dconf-CRITICAL **: 15:33:28.995: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:28.998: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:28.999: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:29.001: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:29.006: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:29.008: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): Gtk-CRITICAL **: 15:33:29.040: Unable to create user data directory '/home/sandbox/.local/share' for storing the recently used files list: Read-only file system\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\nFontconfig error: No writable cache directories\n\n(evince:26): dconf-CRITICAL **: 15:33:30.811: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.812: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.814: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.817: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.979: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.981: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.983: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.985: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.987: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.988: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.990: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.991: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.993: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.994: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:30.995: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:31.185: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:31.203: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:31.206: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:31.223: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:31.225: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:31.227: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:31.228: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n\n(evince:26): dconf-CRITICAL **: 15:33:31.231: unable to create directory '/home/sandbox/.cache/dconf': Read-only file system.  dconf will not work properly.\n"
+      "stderr": ""
+    },
+    "strace": {
+      "trace_prefix": "/tmp/trace",
+      "trace_files": [
+        "/tmp/trace.26",
+        "/tmp/trace.27",
+        "/tmp/trace.28",
+        "/tmp/trace.29",
+        "/tmp/trace.30",
+        "/tmp/trace.31",
+        "/tmp/trace.32",
+        "/tmp/trace.33",
+        "/tmp/trace.34",
+        "/tmp/trace.35",
+        "/tmp/trace.36",
+        "/tmp/trace.37",
+        "/tmp/trace.38",
+        "/tmp/trace.39",
+        "/tmp/trace.40",
+        "/tmp/trace.41",
+        "/tmp/trace.42",
+        "/tmp/trace.43",
+        "/tmp/trace.44"
+      ],
+      "suspicious_syscalls": [
+        "connect(",
+        "socket("
+      ]
+    },
+    "sandbox_runner": {
+      "command": [
+        "docker",
+        "compose",
+        "run",
+        "--rm",
+        "-v",
+        "/home/samu/PDF-analiser/incoming/test_js.pdf:/input.pdf:ro",
+        "-v",
+        "/home/samu/PDF-analiser/reports/test_js_verdict.json:/output/test_js_verdict.json",
+        "sandbox",
+        "/input.pdf",
+        "/output/test_js_verdict.json"
+      ],
+      "rc": 0,
+      "stdout": "",
+      "stderr": " Container pdf-analiser-sandbox-run-eb6954787e83 Creating \n Container pdf-analiser-sandbox-run-eb6954787e83 Created \n"
+    },
+    "pdfid": {
+      "command": [
+        "/usr/bin/python3",
+        "/home/samu/PDF-analiser/triage/pdfid.py",
+        "/home/samu/PDF-analiser/incoming/test_js.pdf"
+      ],
+      "rc": 0,
+      "report_path": "/home/samu/PDF-analiser/reports/test_js_pdfid.txt",
+      "hits": [
+        "javascript",
+        "js"
+      ],
+      "suspicious": true
     }
+  },
+  "artifacts": {
+    "pdfid_report": "/home/samu/PDF-analiser/reports/test_js_pdfid.txt",
+    "verdict_report": "/home/samu/PDF-analiser/reports/test_js_verdict.json",
+    "copied_to": "/home/samu/PDF-analiser/rejected/test_js.pdf"
   }
 }

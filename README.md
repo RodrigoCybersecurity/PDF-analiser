@@ -525,6 +525,7 @@ MIT License
 
 ## Autor
 
-**RodrigoCybersecurity**
+<a href="github.com/RodrigoCybersecurity">RodrigoCybersecurity</a>
+<a href="github.com/0xthearchitect">TheArchitect</a>
 
 Se este projeto foi útil, considere manter a documentação, os testes e o modelo de threat assessment sempre atualizados.

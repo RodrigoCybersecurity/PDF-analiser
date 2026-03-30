@@ -59,6 +59,15 @@ Analisar todos os ficheiros suportados em `incoming/`:
 python3 -m file_analyser --incoming
 ```
 
+### API
+
+```bash
+cd PDF-analiser                                      
+pip install -r requirements-api.txt
+uvicorn scanner_api.app:app --host 0.0.0.0 --port 8000
+```
+Depois só ir a **localhost:8000/docs**
+
 ### Shell
 
 ```bash

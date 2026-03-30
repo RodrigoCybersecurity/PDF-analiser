@@ -530,16 +530,16 @@ MIT License
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/RodrigoCybersecurity">
-        <img src="https://github.com/RodrigoCybersecurity.png" width="80" style="border-radius: 12px;" /><br/>
-        <b>RodrigoCybersecurity</b>
+      <a href="https://github.com/RodrigoCybersecurity" style="text-decoration: none;">
+        <img src="https://github.com/RodrigoCybersecurity.png" width="80" style="border-radius: 12px;" /><br/><br/>
+        <sub><b>RodrigoCybersecurity</b></sub>
       </a>
     </td>
     <td width="40"></td>
     <td align="center">
-      <a href="https://github.com/0xthearchitect">
-        <img src="https://github.com/0xthearchitect.png" width="80" style="border-radius: 12px;" /><br/>
-        <b>TheArchitect</b>
+      <a href="https://github.com/0xthearchitect" style="text-decoration: none;">
+        <img src="https://github.com/0xthearchitect.png" width="80" style="border-radius: 12px;" /><br/><br/>
+        <sub><b>TheArchitect</b></sub>
       </a>
     </td>
   </tr>
@@ -547,8 +547,6 @@ MIT License
 
 <br/>
 
-<p>
 Se este projeto foi útil, considere manter a documentação, os testes e o modelo de threat assessment sempre atualizados.
-</p>
 
 </div>

@@ -1,0 +1,21 @@
+services:
+  site:
+    image: teu-site:latest
+    depends_on:
+      - scanner-api
+    environment:
+      SCANNER_API_URL: http://scanner-api:8000
+
+  scanner-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # IMPORTANTE:
+      # para a sandbox via Docker funcionar de dentro do container,
+      # o repositório precisa existir no HOST nesse mesmo caminho absoluto.
+      - ${PDF_ANALISER_HOST_PATH:?defina o caminho absoluto do repo no host}:/app
+    working_dir: /app

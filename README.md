@@ -155,6 +155,15 @@ A pasta `scanner_api/` adiciona uma camada HTTP ao projeto, permitindo que qualq
 POST /scan
 ```
 
+Para mais informações iniciar **localhost** na porta **8000** e ir a **/docs** para isso corre estes comandos em baixo:
+
+
+```bash
+cd PDF-analiser                                      
+pip install -r requirements.txt
+uvicorn scanner_api.app:app --host 0.0.0.0 --port 8000
+```
+
 ### Entrada
 
 A requisição deve ser enviada como `multipart/form-data` com um campo:

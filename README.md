@@ -363,7 +363,16 @@ curl -X POST http://localhost:8000/scan \
   --output resultado.pdf
 ```
 
-Para inspecionar headers e status:
+### API
+
+```bash
+cd PDF-analiser                                      
+pip install -r requirements-api.txt
+uvicorn scanner_api.app:app --host 0.0.0.0 --port 8000
+```
+Depois só ir a **localhost:8000/docs**
+
+### Shell
 
 ```bash
 curl -i -X POST http://localhost:8000/scan \

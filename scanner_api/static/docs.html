@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Docs · Validador de Ficheiros</title>
+  <meta name="description" content="Documentação da API do Validador de Ficheiros." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #111827;
+      --surface: #0c111b;
+      --surface-2: #101827;
+      --surface-3: #0d1422;
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #edf2fa;
+      --muted: #98a8bd;
+      --brand: #2563eb;
+      --brand-strong: #3b82f6;
+      --ok: #16c784;
+      --post: #7aa2ff;
+      --warn: #f5b14c;
+      --danger: #ff6b6b;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 50% -22%, rgba(37, 99, 235, 0.14), transparent 58%),
+        radial-gradient(740px 380px at 100% -18%, rgba(37, 99, 235, 0.08), transparent 52%),
+        var(--bg);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(12, 17, 27, 0.84);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      width: min(1240px, 95vw);
+      margin: 0 auto;
+      height: 72px;
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.05);
+    }
+
+    .brand-name {
+      font-size: 26px;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .top-tabs {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-left: 4px;
+    }
+
+    .top-tabs a {
+      text-decoration: none;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 9px;
+      font-size: 13px;
+      border: 1px solid transparent;
+      transition: all .2s ease;
+    }
+
+    .top-tabs a.active,
+    .top-tabs a:hover {
+      color: #dce7f8;
+      background: rgba(37, 99, 235, 0.14);
+      border-color: rgba(37, 99, 235, 0.34);
+      box-shadow: none;
+    }
+
+    .top-search {
+      max-width: 360px;
+      position: relative;
+      justify-self: end;
+    }
+
+    .top-search input {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(17, 24, 39, 0.74);
+      color: var(--text);
+      border-radius: 11px;
+      padding: 10px 12px;
+      outline: none;
+      font-size: 13px;
+    }
+
+    .top-search input::placeholder { color: #7f8da2; }
+    .top-search input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.18);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ghost-btn {
+      border: 1px solid var(--line);
+      background: rgba(16, 24, 39, 0.8);
+      color: var(--text);
+      border-radius: 11px;
+      padding: 9px 12px;
+      font-size: 13px;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+
+    .ghost-btn:hover {
+      border-color: rgba(37, 99, 235, 0.42);
+      box-shadow: none;
+    }
+
+    .primary-btn {
+      border: 1px solid rgba(59, 130, 246, 0.66);
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: #fff;
+      border-radius: 10px;
+      padding: 9px 13px;
+      font-size: 13px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+      transition: all .2s ease;
+    }
+
+    .primary-btn:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+    }
+
+    .layout {
+      width: min(1240px, 95vw);
+      margin: 28px auto 64px;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .sidebar {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), var(--surface-2));
+      border-radius: var(--radius);
+      padding: 14px;
+      height: fit-content;
+      position: sticky;
+      top: 92px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    .nav-title {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 2px 0 10px;
+      padding: 0 8px;
+      font-weight: 700;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #cad8ea;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-size: 14px;
+      margin-bottom: 4px;
+      border: 1px solid transparent;
+      transition: all .2s ease;
+      position: relative;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: rgba(37, 99, 235, 0.14);
+      border-color: rgba(37, 99, 235, 0.28);
+      color: #eaf1ff;
+      box-shadow: none;
+    }
+
+    .sidebar a.active::before {
+      content: "";
+      position: absolute;
+      left: -14px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      border-radius: 999px;
+      background: #2563eb;
+      box-shadow: none;
+    }
+
+    .content {
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--surface), var(--surface-3));
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.35),
+        0 1px 0 rgba(255,255,255,0.02) inset;
+      transition: all .2s ease;
+      animation: fadeUp .45s ease both;
+    }
+
+    .card:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.01);
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-size: 50px;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+      color: #f7f9fd;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      color: rgba(152, 168, 189, 0.78);
+      max-width: 72ch;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .hero-card {
+      border-color: var(--line);
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,0.12), transparent 55%),
+        linear-gradient(180deg, var(--surface), var(--surface-3));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 6px 11px;
+      border: 1px solid rgba(37, 99, 235, .32);
+      background: rgba(37, 99, 235, .12);
+      color: #d4e2ff;
+      margin-bottom: 14px;
+    }
+
+    .hero-chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #60a5fa;
+      box-shadow: none;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 30px;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.014em;
+    }
+
+    .endpoint-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .endpoint {
+      border: 1px solid var(--line);
+      background: rgba(8, 13, 24, 0.68);
+      border-radius: 13px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.24);
+      transition: all .2s ease;
+    }
+
+    .endpoint:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.13);
+      filter: brightness(1.02);
+    }
+
+    .method {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .m-get {
+      background: rgba(22, 199, 132, .2);
+      color: #b4f7dd;
+      border: 1px solid rgba(22, 199, 132, .35);
+    }
+
+    .m-post {
+      background: rgba(37, 99, 235, .22);
+      color: #d8e4ff;
+      border: 1px solid rgba(37, 99, 235, .38);
+    }
+
+    .route {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: #e6efff;
+      font-size: 14px;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+
+    .desc {
+      margin-top: 6px;
+      color: rgba(152, 168, 189, 0.82);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    code,
+    pre,
+    .route {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    code {
+      background: rgba(97, 126, 255, 0.14);
+      border: 1px solid rgba(97, 126, 255, 0.28);
+      border-radius: 7px;
+      padding: 1px 6px;
+      color: #cfdcff;
+      font-size: 12px;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      background: #060b15;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 11px;
+      padding: 14px;
+      overflow: auto;
+      color: #d5e1f3;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .status-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .status-item {
+      border: 1px solid var(--line);
+      background: rgba(8, 13, 22, 0.65);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 14px;
+      color: #d4e1f2;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .pill {
+      border-radius: 999px;
+      font-size: 11px;
+      padding: 3px 8px;
+      font-weight: 700;
+      margin-right: 7px;
+      display: inline-block;
+    }
+
+    .ok { background: rgba(16,185,129,.2); color: #9ff2d1; }
+    .warn { background: rgba(245,158,11,.2); color: #fde6b1; }
+    .err { background: rgba(239,68,68,.2); color: #fecaca; }
+
+    .note {
+      margin-top: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(37, 99, 235, 0.08);
+      border-radius: 11px;
+      padding: 12px;
+      color: #cadcff;
+      font-size: 14px;
+    }
+
+    .footer {
+      color: #8da0bb;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    .footer a { color: #a9bde6; text-decoration: none; }
+
+    .empty-search {
+      display: none;
+      border: 1px dashed #27406e;
+      border-radius: 12px;
+      padding: 14px;
+      color: #a8bbd7;
+      font-size: 14px;
+      background: rgba(20, 34, 60, 0.25);
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .endpoint-grid,
+      .status-list { grid-template-columns: 1fr; }
+      .topbar-inner { grid-template-columns: 1fr; height: auto; padding: 12px 0; }
+      .top-search { max-width: none; justify-self: stretch; }
+      .top-tabs { flex-wrap: wrap; }
+      .top-actions { justify-content: flex-start; }
+      h1 { font-size: 38px; }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/docs">
+        <span class="brand-mark">V</span>
+        <span class="brand-name">Validador Docs</span>
+      </a>
+
+      <nav class="top-tabs">
+        <a class="active" href="#intro">Welcome</a>
+        <a href="#endpoints">Endpoints</a>
+        <a href="#examples">Examples</a>
+      </nav>
+
+      <div class="top-search">
+        <input id="filterInput" type="text" placeholder="Pesquisar endpoint (ex: /scan, /health, job...)" />
+      </div>
+
+      <div class="top-actions">
+        <a class="ghost-btn" href="/health" target="_blank">Health</a>
+        <a class="primary-btn" href="/">Ir para Dashboard</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <p class="nav-title">Navegação</p>
+      <a class="active" href="#intro">Visão geral</a>
+      <a href="#endpoints">Endpoints</a>
+      <a href="#examples">Exemplos de uso</a>
+      <a href="#responses">Códigos de resposta</a>
+    </aside>
+
+    <main class="content">
+      <section class="card hero-card" id="intro">
+        <span class="hero-chip">New API v2</span>
+        <h1>Build with the File Analyzer API</h1>
+        <p class="subtitle">Integração HTTP para validar ficheiros de forma segura. A API recebe PDF/JPG/JPEG, analisa o risco e devolve resultado pronto para usar em aplicações de escritório, backoffice e automações.</p>
+        <div class="note">Base URL local: <code>http://localhost:8000</code> · Produção: configurar domínio público via proxy/API gateway.</div>
+      </section>
+
+      <section class="card" id="endpoints">
+        <h2>Endpoints</h2>
+        <div class="endpoint-grid" id="endpointGrid">
+          <article class="endpoint" data-keywords="health status online get /health">
+            <span class="method m-get">GET</span>
+            <div class="route">/health</div>
+            <p class="desc">Confirma que a API está disponível.</p>
+          </article>
+
+          <article class="endpoint" data-keywords="scan upload post /scan response_mode file json">
+            <span class="method m-post">POST</span>
+            <div class="route">/scan?response_mode=file|json</div>
+            <p class="desc">Recebe ficheiro em <code>multipart/form-data</code> no campo <code>file</code>. Em JSON devolve estado, score de risco e links do job.</p>
+          </article>
+
+          <article class="endpoint" data-keywords="report job download json get /jobs report">
+            <span class="method m-get">GET</span>
+            <div class="route">/jobs/{job_id}/report</div>
+            <p class="desc">Descarrega o relatório JSON dessa análise.</p>
+          </article>
+
+          <article class="endpoint" data-keywords="download file job get /jobs download">
+            <span class="method m-get">GET</span>
+            <div class="route">/jobs/{job_id}/download</div>
+            <p class="desc">Descarrega o ficheiro final produzido (aceite ou rejeitado).</p>
+          </article>
+        </div>
+        <div id="emptySearch" class="empty-search">Sem resultados para essa pesquisa.</div>
+      </section>
+
+      <section class="card" id="examples">
+        <h2>Exemplos rápidos</h2>
+        <pre># 1) Health
+curl http://localhost:8000/health
+
+# 2) Upload para obter resposta JSON
+curl -X POST "http://localhost:8000/scan?response_mode=json" \
+  -F "file=@/caminho/ficheiro.pdf"
+
+# 3) Obter relatório do job
+curl "http://localhost:8000/jobs/{job_id}/report"</pre>
+      </section>
+
+      <section class="card" id="responses">
+        <h2>Códigos de resposta</h2>
+        <div class="status-list">
+          <div class="status-item"><span class="pill ok">200</span>Pedido concluído com sucesso.</div>
+          <div class="status-item"><span class="pill warn">413</span>Ficheiro excede o limite permitido.</div>
+          <div class="status-item"><span class="pill warn">415</span>Tipo de ficheiro não suportado.</div>
+          <div class="status-item"><span class="pill warn">422</span>Ficheiro rejeitado pela análise.</div>
+          <div class="status-item"><span class="pill err">500</span>Erro interno durante processamento.</div>
+        </div>
+      </section>
+
+      <p class="footer">Validador de Ficheiros · API Docs · <a href="/">Voltar ao dashboard</a></p>
+    </main>
+  </div>
+
+  <script>
+    const input = document.getElementById('filterInput');
+    const cards = [...document.querySelectorAll('#endpointGrid .endpoint')];
+    const empty = document.getElementById('emptySearch');
+
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const text = (card.dataset.keywords || '') + ' ' + card.textContent.toLowerCase();
+        const show = !q || text.includes(q);
+        card.style.display = show ? '' : 'none';
+        if (show) visible += 1;
+      });
+      empty.style.display = visible === 0 ? 'block' : 'none';
+    });
+
+    const sidebarLinks = [...document.querySelectorAll('.sidebar a')];
+    const topLinks = [...document.querySelectorAll('.top-tabs a')];
+    const hashLinks = [...sidebarLinks, ...topLinks].filter((a) => a.getAttribute('href')?.startsWith('#'));
+
+    const sections = [...new Set(hashLinks
+      .map((a) => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean))];
+
+    const HEADER_OFFSET = 96;
+
+    function setActive(id) {
+      sidebarLinks.forEach((l) => l.classList.toggle('active', l.getAttribute('href') === `#${id}`));
+      topLinks.forEach((l) => l.classList.toggle('active', l.getAttribute('href') === `#${id}`));
+    }
+
+    function currentSectionId() {
+      let activeId = sections[0]?.id;
+      sections.forEach((section) => {
+        const top = section.getBoundingClientRect().top - HEADER_OFFSET;
+        if (top <= 0) activeId = section.id;
+      });
+      return activeId;
+    }
+
+    function updateActiveFromScroll() {
+      const id = currentSectionId();
+      if (id) setActive(id);
+    }
+
+    hashLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const href = link.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+        const target = document.querySelector(href);
+        if (!target) return;
+
+        event.preventDefault();
+        const targetY = target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET + 1;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        history.replaceState(null, '', href);
+        setActive(target.id);
+      });
+    });
+
+    window.addEventListener('scroll', updateActiveFromScroll, { passive: true });
+    updateActiveFromScroll();
+  </script>
+</body>
+</html>

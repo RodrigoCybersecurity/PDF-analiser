@@ -1,0 +1,23 @@
+FROM python:3.12-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    docker.io \
+    docker-compose-v2 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+COPY requirements-api.txt requirements-api.txt
+RUN pip install --no-cache-dir -r requirements-api.txt
+
+COPY file_analyser ./file_analyser
+COPY triage ./triage
+COPY scanner_api ./scanner_api
+COPY docker-compose.yml ./docker-compose.yml
+
+RUN mkdir -p /app/scanner_api/runtime_jobs /app/reports && chmod -R 777 /app/scanner_api/runtime_jobs /app/reports
+
+EXPOSE 8000
+
+CMD ["uvicorn", "scanner_api.app:app", "--host", "0.0.0.0", "--port", "8000"]
